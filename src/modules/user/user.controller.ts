@@ -19,6 +19,20 @@ export class UserController {
     private readonly configService: ConfigService, // 添加AuthService依赖
   ) {}
 
+  @Post('login')
+  login(@Body() createUserDto: CreateUserDto) {
+    return {
+      code: 200,
+      token: '1123',
+    }
+  }
+  @Post('info')
+  getInfo(@Body() createUserDto: CreateUserDto) {
+    return {
+      code: 200,
+      token: '1123',
+    }
+  }
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
@@ -26,13 +40,7 @@ export class UserController {
 
   @Get()
   findAll() {
-    console.log(this.configService.get('DB'), 111)
-
     return this.userService.findAll()
-  }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id)
   }
 
   @Patch(':id')

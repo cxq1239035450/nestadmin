@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ScheduleModule } from '@nestjs/schedule'
 
-import { UserModule } from './user/user.module'
-import { User } from './user/entities/user.entity'
-import { Profile } from './user/entities/profile.entity'
-import { Roles } from './rules/entities/roles.entity'
-import { Logs } from './logs/entities/logs.entity'
+import { UserModule } from './modules/user/user.module'
+import { User } from './modules//user/entities/user.entity'
+import { Profile } from './modules//user/entities/profile.entity'
+import { Roles } from './modules/rules/entities/roles.entity'
+import { Logs } from './modules/logs/entities/logs.entity'
+import { AuthModule } from './modules/auth/auth.module'
 
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`.trimEnd()
 
@@ -17,6 +19,9 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`.trimEnd()
       envFilePath, //指定环境变量文件
       // load: [],
     }),
+    // 定时任务
+    ScheduleModule.forRoot(),
+    // 读写数据库
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -33,6 +38,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`.trimEnd()
       }),
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
