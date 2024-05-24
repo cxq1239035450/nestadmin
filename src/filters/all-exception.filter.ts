@@ -31,6 +31,7 @@ export class AllExceptionFilter implements ExceptionFilter {
       exceptioin: exception['name'],
       error: msg,
     }
+    console.log('AllExceptionFilter', responseBody)
 
     this.httpAdapter.reply(response, responseBody, httpStatus)
   }

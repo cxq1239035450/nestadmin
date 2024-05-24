@@ -12,8 +12,6 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    console.log(createUserDto, '===========')
-
     const res = await this.userRepository.create(createUserDto)
     return this.userRepository.save(res) // 返回保存后的数据
   }

@@ -13,8 +13,6 @@ export class TypeormFilter implements ExceptionFilter {
     const response = ctx.getResponse()
     response.status(500).json({
       code: code,
-      // path: request.url,
-      // method: request.method,
       message: exception.message,
     })
   }

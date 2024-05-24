@@ -1,4 +1,4 @@
-import { Logs } from 'src/modules/logs/entities/logs.entity'
+import { Logs } from '../../logs/entities/logs.entity'
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 @Entity()
 export class User {

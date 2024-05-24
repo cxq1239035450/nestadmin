@@ -6,18 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseFilters,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { ConfigService } from '@nestjs/config'
+import { TypeormFilter } from '../../filters/typeorm.filter'
 
 @Controller('user')
+@UseFilters(new TypeormFilter())
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly configService: ConfigService, // 添加AuthService依赖
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post('login')
   login(@Body() createUserDto: CreateUserDto) {
