@@ -7,13 +7,18 @@ import {
   Param,
   Delete,
   UseFilters,
+  UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { TypeormFilter } from '../../filters/typeorm.filter'
+import { TypeormFilter } from '@filters/typeorm.filter'
+import { AuthGuard } from '@nestjs/passport'
 
 @Controller('user')
+@UseInterceptors(ClassSerializerInterceptor) //过滤entity中Exclude的属性
 @UseFilters(new TypeormFilter())
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -34,15 +39,21 @@ export class UserController {
   }
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    console.log('createUserDto', createUserDto)
+
     return this.userService.create(createUserDto)
   }
 
-  @Get()
+  @Get('list')
   findAll() {
     return this.userService.findAll()
   }
-
+  @Get(':name')
+  find(@Param('name') name: string) {
+    return this.userService.find(name)
+  }
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto)
   }

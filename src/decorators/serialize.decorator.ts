@@ -1,10 +1,7 @@
-// import { UseInterceptors } from '@nestjs/common';
-// import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
+import { UseInterceptors } from '@nestjs/common'
+import { SerializeInterceptor } from '@interceptors/serialize.interceptor'
+import { ClassConstructor } from '@type/index'
 
-// interface ClassConstructor {
-//   new (...args: any[]): any;
-// }
-
-// export function Serialize(dto: ClassConstructor) {
-//   return UseInterceptors(new SerializeInterceptor(dto));
-// }
+export function Serialize(dto: ClassConstructor) {
+  return UseInterceptors(new SerializeInterceptor(dto))
+}

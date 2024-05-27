@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer'
 import { Logs } from '../../logs/entities/logs.entity'
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 @Entity()

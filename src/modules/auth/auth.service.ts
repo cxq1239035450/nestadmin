@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
-
-import { UserService } from '../user/user.service'
+import * as argon2 from 'argon2'
+import { UserService } from '@modules/user/user.service'
 
 @Injectable()
 export class AuthService {
@@ -12,16 +12,28 @@ export class AuthService {
   ) {}
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.find(username)
-    if (user && user.password === password) {
-      const { password, ...result } = user
-      return result
+    if (user) {
+      return user
     }
     return null
   }
   async login(user: any) {
+    const valid = await this.validateUser(user.username, user.password)
+    if (!valid) {
+      return new ForbiddenException('用户不存在')
+    }
+
+    const isPasswordValid = await argon2.verify(valid.password, user.password)
+    if (!isPasswordValid) {
+      return new ForbiddenException('用户名或密码错误')
+    }
+
     const payload = { username: user.username, password: user.password }
+
     return {
-      access_token: this.jwtService.sign(payload),
+      data: {
+        access_token: this.jwtService.sign(payload),
+      },
     }
   }
 }

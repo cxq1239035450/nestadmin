@@ -8,7 +8,8 @@ import { AuthModule } from '@modules/auth/auth.module'
 import { LogsModule } from '@modules/logs/logs.module'
 
 import { typeOrmConfig } from '../ormconfig'
-import { envConfig } from './config/envConfig'
+import { envConfig } from '@configs/envConfig'
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { envConfig } from './config/envConfig'
     UserModule,
     AuthModule,
     LogsModule,
+    TasksModule,
   ],
   controllers: [],
   providers: [],

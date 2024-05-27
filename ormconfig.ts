@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { DataSource, DataSourceOptions } from 'typeorm'
-import { ConfigEnum } from './src/enums/config.enum'
-import { getServerConfig } from './src/utils'
+import { ConfigEnum } from '@enums/config.enum'
+import { getServerConfig } from '@utils/index'
 
 // 为什么要使用这个文件
 // 使用ormcli
