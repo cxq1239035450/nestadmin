@@ -10,6 +10,7 @@
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
+      "@dto/*": ["src/dto/*"],
       "@configs/*": ["src/configs/*"],
       "@decorators/*": ["src/decorators/*"],
       "@enums/*": ["src/enums/*"],

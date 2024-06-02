@@ -29,10 +29,11 @@ export class AuthController {
   async login(@Body() dto: LoginAuthDto) {
     return this.authService.login(dto)
   }
+
+  @UseGuards(AuthGuard('jwt'))
   @Post('sign')
   async sign(@Body() dto) {
     this.jwtService.signAsync(dto)
-
     return {}
   }
 }

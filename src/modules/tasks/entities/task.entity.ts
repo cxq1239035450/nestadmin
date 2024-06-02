@@ -1,4 +1,4 @@
-import { IsDate } from 'class-validator'
+import { IsDate, IsString } from 'class-validator'
 import {
   Column,
   CreateDateColumn,
@@ -14,25 +14,32 @@ export class Task {
   @Column()
   name: string
 
-  @Column()
+  @Column({ default: '' })
   description: string
 
   @Column()
   url: string
 
-  @Column()
+  @Column('text')
   headers: string
 
   @Column()
   data: string
 
-  @Column()
-  status: string
+  @Column({ default: '' })
+  executionResult: string
 
-  @IsDate()
   @Column()
-  executionTime: Date
+  status: number // 0: 未执行，1: 执行中
 
-  @CreateDateColumn()
+  @IsString()
+  @Column()
+  executionTime: string
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    precision: 0,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createTime: Date
 }

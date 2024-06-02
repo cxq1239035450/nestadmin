@@ -22,16 +22,17 @@ export class AllExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR
 
-    const msg: unknown = exception['response'] || 'Internal Server Error'
+    const msg: unknown =
+      exception['response']?.message || 'Internal Server Error'
+    console.log(exception, exception['response'])
 
     const responseBody = {
       code: httpStatus,
       // IP信息
       // ip: requestIp.getClientIp(request),
-      exceptioin: exception['name'],
+      // exceptioin: exception['name'],
       error: msg,
     }
-    console.log('AllExceptionFilter', responseBody)
 
     this.httpAdapter.reply(response, responseBody, httpStatus)
   }

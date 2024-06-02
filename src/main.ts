@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { AllExceptionFilter } from '@filters/all-exception.filter'
+import { TransformInterceptor } from '@interceptors/transform.interceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true })
@@ -13,7 +14,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   )
-
+  app.useGlobalInterceptors(new TransformInterceptor())
   // // helmet头部安全
   // app.use(helmet())
 
