@@ -3,6 +3,7 @@ import {
   IsDateString,
   IsNotEmpty,
   IsNumber,
+  IsNumberString,
   IsString,
 } from 'class-validator'
 
@@ -21,15 +22,15 @@ export class CreateTaskDto {
   @IsString()
   headers: string
 
-  @IsString()
-  executionResult: string
+  // @IsString()
+  executionResult?: string
 
   @IsString()
   data: string
 
-  @IsNumber()
+  @IsNumberString()
   status: number
 
-  @IsDateString()
+  @IsString()
   executionTime: string
 }

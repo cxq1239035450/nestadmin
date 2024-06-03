@@ -43,4 +43,9 @@ export class TasksController {
   start(@Body() dto: idDto) {
     return this.tasksService.start(dto.id)
   }
+
+  @Post('update')
+  update(@Body() updateTaskDto: UpdateTaskDto & idDto) {
+    return this.tasksService.update(updateTaskDto.id, updateTaskDto)
+  }
 }

@@ -41,13 +41,7 @@ export class TasksService {
   createJob(createTaskDto: Task) {
     const job = new CronJob(createTaskDto.executionTime, async () => {
       const res = await this.sendMessage(createTaskDto)
-      console.log(
-        res,
-        '===============================执行结果',
-        getTime(new Date()),
-      )
-      
-      this.update(createTaskDto.id, { executionResult: res + '' })
+      this.update(createTaskDto.id, { executionResult: JSON.stringify(res) })
     })
     this.schedulerRegistry.addCronJob(createTaskDto.name, job)
     job.start()
