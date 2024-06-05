@@ -1,3 +1,4 @@
+import { IsCronTime } from '@decorators/isCronTime.decorator'
 import { IsDate, IsString } from 'class-validator'
 import {
   Column,
@@ -32,9 +33,12 @@ export class Task {
   @Column()
   status: number // 0: 未执行，1: 执行中
 
-  @IsString()
+  @IsCronTime()
   @Column()
   executionTime: string
+
+  @Column()
+  preExecutionTime: string
 
   @CreateDateColumn({
     type: 'timestamp',

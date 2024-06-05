@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UseGuards } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -11,14 +11,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) { }
-  
+  ) {}
+
   async create(createUserDto: CreateUserDto) {
     const res = await this.userRepository.create(createUserDto)
     res.password = await argon2.hash(res.password)
     return this.userRepository.save(res) // 返回保存后的数据
   }
-
+  
   async findAll() {
     return this.userRepository.find()
   }

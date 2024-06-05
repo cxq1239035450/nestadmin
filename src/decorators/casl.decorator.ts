@@ -1,6 +1,6 @@
 // import { SetMetadata } from '@nestjs/common';
 // import { AnyMongoAbility, InferSubjects } from '@casl/ability';
-// import { Action } from 'src/enum/action.enum';
+// import { Action } from '@/enums/action.enum';
 
 // export enum CHECK_POLICIES_KEY {
 //   HANDLER = 'CHECK_POLICIES_HANDLER',

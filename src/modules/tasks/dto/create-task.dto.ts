@@ -28,7 +28,7 @@ export class CreateTaskDto {
   @IsString()
   data: string
 
-  @IsNumberString()
+  // @IsNumberString()
   status: number
 
   @IsString()

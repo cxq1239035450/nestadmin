@@ -6,10 +6,13 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { UserModule } from '@modules/user/user.module'
 import { AuthModule } from '@modules/auth/auth.module'
 import { LogsModule } from '@modules/logs/logs.module'
+import { TasksModule } from '@modules/tasks/tasks.module'
 
 import { typeOrmConfig } from '../ormconfig'
 import { envConfig } from '@configs/envConfig'
-import { TasksModule } from './modules/tasks/tasks.module';
+import { RoleGuard } from '@guards/role.guard'
+
+import { APP_GUARD } from '@nestjs/core'
 
 @Module({
   imports: [

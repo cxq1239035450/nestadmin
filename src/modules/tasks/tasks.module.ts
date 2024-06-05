@@ -4,9 +4,11 @@ import { TasksController } from './tasks.controller'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Task } from './entities/task.entity'
 import { HttpModule } from '@nestjs/axios'
+import { UserModule } from '@modules/user/user.module'
 
 @Module({
   imports: [
+    UserModule,
     TypeOrmModule.forFeature([Task]),
     HttpModule.register({
       timeout: 5000,

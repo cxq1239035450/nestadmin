@@ -11,6 +11,7 @@ import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
 import { idDto } from '@dto/id.dto'
 import { AuthGuard } from '@nestjs/passport'
+import { RoleGuard } from '@guards/role.guard'
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
