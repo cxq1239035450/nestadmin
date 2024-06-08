@@ -22,13 +22,12 @@ export class CreateTaskDto {
   @IsString()
   headers: string
 
-  // @IsString()
-  executionResult?: string
+
 
   @IsString()
   data: string
 
-  // @IsNumberString()
+  @IsNumberString()
   status: number
 
   @IsString()

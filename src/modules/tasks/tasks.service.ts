@@ -4,18 +4,19 @@ import { UpdateTaskDto } from './dto/update-task.dto'
 import { SchedulerRegistry } from '@nestjs/schedule'
 import { CronJob } from 'cron'
 import { Repository } from 'typeorm'
-import { Task } from './entities/task.entity'
+import { Tasks } from './entities/tasks.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { HttpService } from '@nestjs/axios'
 import { catchError, firstValueFrom, map } from 'rxjs'
 import { Serialize } from '@decorators/serialize.decorator'
 import { getTime } from '@utils/time'
+import { idDto } from '@dto/id.dto'
 
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(Task)
-    private readonly tasksRepository: Repository<Task>,
+    @InjectRepository(Tasks)
+    private readonly tasksRepository: Repository<Tasks>,
     private schedulerRegistry: SchedulerRegistry,
     private readonly httpService: HttpService,
   ) {
@@ -30,7 +31,6 @@ export class TasksService {
     allList.forEach(async item => {
       this.createJob(item)
     })
-    console.log(allList, '=================初始化任务脚本')
   }
 
   async create(createTaskDto: CreateTaskDto) {
@@ -38,16 +38,21 @@ export class TasksService {
     this.createJob(task)
     return this.tasksRepository.save(task)
   }
-  createJob(createTaskDto: Task) {
+  createJob(createTaskDto: Tasks) {
     const job = new CronJob(createTaskDto.executionTime, async () => {
-      const res = await this.sendMessage(createTaskDto)
-      this.update(createTaskDto.id, { executionResult: JSON.stringify(res) })
+      this.executeJob(createTaskDto)
     })
     this.schedulerRegistry.addCronJob(createTaskDto.name, job)
     job.start()
     return job
   }
-
+  async executeJob(createTaskDto: CreateTaskDto & idDto) {
+    const res = await this.sendMessage(createTaskDto)
+    return this.update(createTaskDto.id, {
+      executionResult: JSON.stringify(res),
+      preExecutionTime: getTime(),
+    })
+  }
   async update(id: number, updateTaskDto: UpdateTaskDto) {
     return this.tasksRepository.update(id, updateTaskDto)
   }

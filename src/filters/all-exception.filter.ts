@@ -27,7 +27,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     console.log(exception, exception['response'])
 
     const responseBody = {
-      code: httpStatus,
+      status: httpStatus,
       // IP信息
       // ip: requestIp.getClientIp(request),
       // exceptioin: exception['name'],

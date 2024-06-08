@@ -8,7 +8,7 @@ import { AuthModule } from '@modules/auth/auth.module'
 import { LogsModule } from '@modules/logs/logs.module'
 import { TasksModule } from '@modules/tasks/tasks.module'
 
-import { typeOrmConfig } from '../ormconfig'
+import { typeOrmConfig } from '@configs/ormConfig'
 import { envConfig } from '@configs/envConfig'
 import { RoleGuard } from '@guards/role.guard'
 

@@ -2,16 +2,17 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { ConfigEnum } from '@enums/config.enum'
 import { getServerConfig } from '@utils/index'
+import { join } from 'path'
 
 // 为什么要使用这个文件
 // 使用ormcli
 export function buildConnectionOptions() {
   const config = getServerConfig()
-  //会和热更新冲突 
+  //会和热更新冲突
   const entitiesDir =
     process.env.NODE_ENV === 'test'
-      ? [__dirname + '/src/modules/**/entities/*.entity.ts']
-      : [__dirname + '/src/modules/**/entities/*.entity{.js,.ts}']
+      ? [join(__dirname, '../modules/**/entities/*.entity.ts')]
+      : [join(__dirname, '../modules/**/entities/*.entity{.js,.ts}')]
 
   return {
     type: config[ConfigEnum.DB_TYPE],
@@ -22,7 +23,7 @@ export function buildConnectionOptions() {
     database: config[ConfigEnum.DB_DATABASE],
     entities: entitiesDir,
     // 同步本地的schema与数据库 -> 初始化的时候去使用
-    synchronize: true,
+    synchronize: false,
     // logging: logFlag && process.env.NODE_ENV === 'development',
     // logging: false,
   } as TypeOrmModuleOptions

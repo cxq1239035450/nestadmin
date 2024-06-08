@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber, IsNumberString } from 'class-validator'
 
 export class idDto {
-  @IsNumberString()
+  @IsNumber()
   @IsNotEmpty()
   id: number
 }

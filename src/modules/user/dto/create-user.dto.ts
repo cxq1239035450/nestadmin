@@ -1,3 +1,4 @@
+import { Roles } from '@modules/roles/entities/roles.entity'
 import { IsString, IsInt, IsNotEmpty } from 'class-validator'
 
 export class CreateUserDto {
@@ -7,4 +8,6 @@ export class CreateUserDto {
 
   @IsString()
   password: string
+
+  roles?: Roles[]
 }

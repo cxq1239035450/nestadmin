@@ -4,9 +4,10 @@ import { UserController } from './user.controller'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
+import { Roles } from '@modules/roles/entities/roles.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])], // 导入User实体,
+  imports: [TypeOrmModule.forFeature([User, Roles])], // 导入User实体,
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

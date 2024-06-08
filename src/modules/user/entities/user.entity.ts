@@ -8,6 +8,7 @@ import {
   Column,
   OneToMany,
   ManyToMany,
+  JoinTable,
 } from 'typeorm'
 @Entity()
 export class User {
@@ -17,10 +18,12 @@ export class User {
   @Column()
   username: string
 
+  @Exclude()
   @Column()
   password: string
 
   @ManyToMany(() => Roles, role => role.users)
+  @JoinTable()
   roles: Roles[]
 
   @OneToMany(() => Logs, logs => logs.user)

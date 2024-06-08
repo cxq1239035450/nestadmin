@@ -22,7 +22,7 @@ export class RoleGuard implements CanActivate {
       return true
     }
     const req = context.switchToHttp().getRequest()
-    console.log(req, req.user)
+    // console.log(req, req.user)
 
     // const user = await this.userService.find(req.user.username)
 

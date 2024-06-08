@@ -22,7 +22,7 @@ export class TasksController {
     return this.tasksService.findAll()
   }
 
-  @Post('add')
+  @Post('create')
   create(@Body() createTaskDto: CreateTaskDto) {
     if (createTaskDto.executionTime.split(' ').length !== 6) {
       return new BadRequestException('executionTime格式错误')
@@ -41,8 +41,9 @@ export class TasksController {
   }
 
   @Post('start')
-  start(@Body() dto: idDto) {
-    return this.tasksService.start(dto.id)
+  async start(@Body() dto: idDto) {
+    const res = await this.tasksService.findOne(dto.id)
+    return this.tasksService.executeJob(res)
   }
 
   @Post('update')
