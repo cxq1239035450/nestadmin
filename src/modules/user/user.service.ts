@@ -19,10 +19,10 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const res = await this.userRepository.create(createUserDto)
-
+    res.password = await argon2.hash(res.password)
     res.roles = await this.rolesRepository.find({
       where: {
-        id: In(res.roles),
+        id: In(createUserDto.roles),
       },
     })
     return this.userRepository.save(res) // 返回保存后的数据
@@ -44,7 +44,7 @@ export class UserService {
 
     const roles = await this.rolesRepository.find({
       where: {
-        id,
+        id: 1,
       },
     })
     console.log(roles, 'rolesrolesroles')

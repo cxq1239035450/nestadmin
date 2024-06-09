@@ -7,17 +7,18 @@ import {
   Param,
   Delete,
 } from '@nestjs/common'
-import { RulesService } from './roles.service'
+import { RolesService } from './roles.service'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { UpdateRoleDto } from './dto/update-role.dto'
 
-@Controller('rules')
-export class RulesController {
-  constructor(private readonly rulesService: RulesService) {}
+@Controller('roles')
+export class RolesController {
+  constructor(private readonly rolesService: RolesService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createRuleDto: CreateRoleDto) {
-    return this.rulesService.create(createRuleDto)
-  }
+    console.log(createRuleDto, 'createRuleDtocreateRuleDto')
 
+    return this.rolesService.create(createRuleDto)
+  }
 }

@@ -25,7 +25,7 @@ import { SelectUserDto } from './dto/select-user.dto'
 @Controller('user')
 @UseInterceptors(ClassSerializerInterceptor) //过滤entity中Exclude的属性
 @UseFilters(new TypeormFilter())
-@UseGuards(AuthGuard('jwt'), RoleGuard)
+// @UseGuards(AuthGuard('jwt'), RoleGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

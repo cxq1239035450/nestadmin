@@ -7,7 +7,7 @@ import { Repository } from 'typeorm'
 import { Tasks } from './entities/tasks.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { HttpService } from '@nestjs/axios'
-import { catchError, firstValueFrom, map } from 'rxjs'
+import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { Serialize } from '@decorators/serialize.decorator'
 import { getTime } from '@utils/time'
 import { idDto } from '@dto/id.dto'
@@ -48,6 +48,8 @@ export class TasksService {
   }
   async executeJob(createTaskDto: CreateTaskDto & idDto) {
     const res = await this.sendMessage(createTaskDto)
+    console.log(res, '========================')
+
     return this.update(createTaskDto.id, {
       executionResult: JSON.stringify(res),
       preExecutionTime: getTime(),
@@ -97,7 +99,12 @@ export class TasksService {
         .post(res.url, res.data, {
           headers: JSON.parse(res.headers),
         })
-        .pipe(map(response => response.data)),
+        .pipe(
+          map(response => response.data),
+          catchError(error => {
+            return of(error.response.data)
+          }),
+        ),
     )
   }
 }

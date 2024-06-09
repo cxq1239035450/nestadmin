@@ -23,7 +23,7 @@ export class User {
   password: string
 
   @ManyToMany(() => Roles, role => role.users)
-  @JoinTable()
+  @JoinTable({ name: 'user_roles' })
   roles: Roles[]
 
   @OneToMany(() => Logs, logs => logs.user)
