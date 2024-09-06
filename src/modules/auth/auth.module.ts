@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { UserModule } from '../user/user.module'
-import { ConfigEnum } from '../../enums/config.enum'
+import { ConfigEnum } from '@enums/config.enum'
 import { JwtStrategy } from './jwt.strategy'
 
 @Global()

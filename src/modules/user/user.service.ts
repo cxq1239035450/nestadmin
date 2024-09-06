@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -18,7 +18,7 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const res = await this.userRepository.create(createUserDto)
+    const res = this.userRepository.create(createUserDto)
     res.password = await argon2.hash(res.password)
     res.roles = await this.rolesRepository.find({
       where: {
@@ -32,24 +32,21 @@ export class UserService {
     return this.userRepository.find()
   }
 
-  find(selectUserDto: SelectUserDto) {
-    return this.userRepository.findOne({
+  find(selectUserDto: SelectUserDto): Promise<User[]> {
+    return this.userRepository.find({
       where: { ...selectUserDto },
+      relations: ['roles'],
     })
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.find({ id })
-    console.log(user, 'useruseruseruser')
 
-    const roles = await this.rolesRepository.find({
+    user[0].roles = await this.rolesRepository.find({
       where: {
         id: 1,
       },
     })
-    console.log(roles, 'rolesrolesroles')
-
-    user.roles = roles
     return this.userRepository.save(user)
   }
 
