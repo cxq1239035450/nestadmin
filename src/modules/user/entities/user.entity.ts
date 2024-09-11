@@ -22,7 +22,9 @@ export class User {
   @Column()
   password: string
 
-  @ManyToMany(() => Roles, role => role.users)
+  @ManyToMany(() => Roles, role => role.users, {
+    cascade: true,
+  })
   @JoinTable({ name: 'user_roles' })
   roles: Roles[]
 

@@ -1,13 +1,6 @@
 import { Roles } from '@modules/roles/entities/roles.entity'
-import { IsString, IsInt, IsNotEmpty } from 'class-validator'
+import { LoginAuthDto } from '@modules/auth/dto/login-auth.dto'
 
-export class CreateUserDto {
-  @IsString()
-  @IsNotEmpty()
-  username: string
-
-  @IsString()
-  password: string
-
+export class CreateUserDto extends LoginAuthDto {
   roles?: Roles[]
 }

@@ -34,7 +34,7 @@ export class UserController {
     const user = await this.userService.find({
       username: createUserDto.username,
     })
-    if (user) {
+    if (user[0]) {
       return new BadRequestException('用户名已存在')
     }
     return this.userService.create(createUserDto)

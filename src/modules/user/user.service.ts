@@ -22,7 +22,7 @@ export class UserService {
     res.password = await argon2.hash(res.password)
     res.roles = await this.rolesRepository.find({
       where: {
-        id: In(createUserDto.roles),
+        id: In(createUserDto.roles || []),
       },
     })
     return this.userRepository.save(res) // 返回保存后的数据
@@ -42,12 +42,12 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.find({ id })
 
-    user[0].roles = await this.rolesRepository.find({
+    updateUserDto[0].roles = await this.rolesRepository.find({
       where: {
         id: 1,
       },
     })
-    return this.userRepository.save(user)
+    return this.userRepository.save({ ...user, ...updateUserDto })
   }
 
   remove(id: number) {
