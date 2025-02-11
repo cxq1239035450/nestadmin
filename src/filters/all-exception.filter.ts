@@ -24,7 +24,6 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     const msg: unknown =
       exception['response']?.message || 'Internal Server Error'
-    console.log(exception, exception['response'])
 
     const responseBody = {
       status: httpStatus,
@@ -33,7 +32,6 @@ export class AllExceptionFilter implements ExceptionFilter {
       // exceptioin: exception['name'],
       error: msg,
     }
-
     this.httpAdapter.reply(response, responseBody, httpStatus)
   }
 }

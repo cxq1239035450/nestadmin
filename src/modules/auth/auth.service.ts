@@ -20,12 +20,12 @@ export class AuthService {
   async login(user: any) {
     const valid = await this.validateUser(user.username, user.password)
     if (!valid) {
-      return new ForbiddenException('用户不存在')
+      throw new ForbiddenException('用户不存在')
     }
 
     const isPasswordValid = await argon2.verify(valid.password, user.password)
     if (!isPasswordValid) {
-      return new ForbiddenException('用户名或密码错误')
+      throw new ForbiddenException('用户名或密码错误')
     }
 
     const payload = { username: user.username, password: user.password }
