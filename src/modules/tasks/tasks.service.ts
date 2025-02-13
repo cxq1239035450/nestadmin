@@ -28,19 +28,19 @@ export class TasksService {
         status: 1,
       },
     })
-    allList.forEach(async item => {
+    for (const item of allList) {
       this.createJob(item)
-    })
+    }
   }
 
   async create(createTaskDto: CreateTaskDto) {
-    const task = await this.tasksRepository.create(createTaskDto)
+    const task = this.tasksRepository.create(createTaskDto)
     this.createJob(task)
     return this.tasksRepository.save(task)
   }
   createJob(createTaskDto: Tasks) {
     const job = new CronJob(createTaskDto.executionTime, async () => {
-      this.executeJob(createTaskDto)
+      await this.executeJob(createTaskDto)
     })
     this.schedulerRegistry.addCronJob(createTaskDto.name, job)
     job.start()
@@ -75,8 +75,7 @@ export class TasksService {
     }
   }
   async findOne(id: number) {
-    const res = await this.tasksRepository.findOne({ where: { id } })
-    return res
+    return await this.tasksRepository.findOne({ where: { id } })
   }
 
   stopAll() {
