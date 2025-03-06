@@ -48,8 +48,6 @@ export class TasksService {
   }
   async executeJob(createTaskDto: CreateTaskDto & idDto) {
     const res = await this.sendMessage(createTaskDto)
-    console.log(res, '========================')
-
     return this.update(createTaskDto.id, {
       executionResult: JSON.stringify(res),
       preExecutionTime: getTime(),

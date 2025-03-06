@@ -2,7 +2,7 @@ export interface preResponse<T> {
   data: T
 }
 export interface Response<T> {
-  code: Number
+  code: number
   data: T
-  msg: String
+  msg: string
 }

@@ -16,12 +16,14 @@ import {
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { SelectUserDto } from './dto/select-user.dto'
 import { TypeormFilter } from '@filters/typeorm.filter'
 import { AuthGuard } from '@nestjs/passport'
 import { RoleGuard } from '@guards/role.guard'
 import { idDto } from '@dto/id.dto'
-import { SelectUserDto } from './dto/select-user.dto'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('用户')
 @Controller('user')
 @UseInterceptors(ClassSerializerInterceptor) //过滤entity中Exclude的属性
 @UseFilters(new TypeormFilter())

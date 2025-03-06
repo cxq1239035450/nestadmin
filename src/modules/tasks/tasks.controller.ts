@@ -12,7 +12,9 @@ import { UpdateTaskDto } from './dto/update-task.dto'
 import { idDto } from '@dto/id.dto'
 import { AuthGuard } from '@nestjs/passport'
 import { RoleGuard } from '@guards/role.guard'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('定时任务')
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
 export class TasksController {

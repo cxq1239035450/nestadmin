@@ -16,7 +16,9 @@ import { AuthService } from './auth.service'
 import { LoginAuthDto } from './dto/login-auth.dto'
 import { UpdateAuthDto } from './dto/update-auth.dto'
 import { UserService } from '../user/user.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('权限')
 @Controller('auth')
 export class AuthController {
   constructor(
