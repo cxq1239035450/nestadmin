@@ -11,16 +11,16 @@ export class Logs {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({comment: '请求路径'})
   path: string
 
-  @Column()
+  @Column({comment: '请求方法'})
   method: string
 
-  @Column()
+  @Column({comment: '请求参数'})
   data: string
 
-  @Column()
+  @Column({comment: '请求结果'})
   result: number
 
   @ManyToOne(() => User, user => user.logs)

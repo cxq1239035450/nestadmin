@@ -12,32 +12,32 @@ export class Tasks {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({comment: '0: 未执行，1: 执行中'})
   name: string
 
-  @Column({ default: '' })
+  @Column({ comment:'描述', default: '' })
   description: string
 
-  @Column()
+  @Column({comment: '请求路径'})
   url: string
 
-  @Column('text')
+  @Column({ comment:'请求头',type: 'text'})
   headers: string
 
-  @Column()
+  @Column({ comment:'请求体'})
   data: string
 
-  @Column({ default: '' })
+  @Column({ comment:'执行结果', default: '' })
   executionResult: string
 
-  @Column()
-  status: number // 0: 未执行，1: 执行中
+  @Column({comment: '0: 未执行，1: 执行中'})
+  status: number
 
   @IsCronTime()
-  @Column()
+  @Column({comment: '执行时间'})
   executionTime: string
 
-  @Column()
+  @Column({comment: '上次执行时间'})
   preExecutionTime: string
 
   @CreateDateColumn({
@@ -45,5 +45,6 @@ export class Tasks {
     precision: 0,
     default: () => 'CURRENT_TIMESTAMP',
   })
+  @Column({comment: '创建时间'})
   createTime: Date
 }

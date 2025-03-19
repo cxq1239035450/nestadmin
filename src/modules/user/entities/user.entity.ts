@@ -15,11 +15,11 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ comment: "用户名称" })
   username: string
 
   @Exclude()
-  @Column()
+  @Column({ comment: "用户密码" })
   password: string
 
   @ManyToMany(() => Roles, role => role.users, {

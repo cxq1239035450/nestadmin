@@ -1,7 +1,9 @@
-import { Module } from '@nestjs/common'
+import { Module,MiddlewareConsumer,RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ScheduleModule } from '@nestjs/schedule'
+import { ServeStaticModule } from '@nestjs/serve-static';
+// import { EventEmitterModule } from '@nestjs/event-emitter'; // 发布订阅管理
 
 import { UserModule } from '@modules/user/user.module'
 import { AuthModule } from '@modules/auth/auth.module'
@@ -11,8 +13,10 @@ import { RolesModule } from '@modules/roles/roles.module'
 
 import { typeOrmConfig } from '@configs/ormConfig'
 import { envConfig } from '@configs/envConfig'
-import { RoleGuard } from '@guards/role.guard'
+import { ServeStaticConfig } from '@configs/serveStaticConfig'
 
+import { RoleGuard } from '@guards/role.guard'
+import { LoggerMiddleware } from '@middlewares/logger.middleware'
 import { APP_GUARD } from '@nestjs/core'
 
 @Module({
@@ -23,6 +27,8 @@ import { APP_GUARD } from '@nestjs/core'
     ScheduleModule.forRoot(),
     // 读写数据库
     TypeOrmModule.forRoot(typeOrmConfig),
+    // 静态资源托管
+    ServeStaticModule.forRoot(ServeStaticConfig),
     UserModule,
     AuthModule,
     LogsModule,
@@ -32,4 +38,10 @@ import { APP_GUARD } from '@nestjs/core'
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '/{*splat}', method: RequestMethod.ALL });
+  }
+}
