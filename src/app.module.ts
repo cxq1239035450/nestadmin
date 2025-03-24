@@ -10,6 +10,7 @@ import { AuthModule } from '@modules/auth/auth.module'
 import { LogsModule } from '@modules/logs/logs.module'
 import { TasksModule } from '@modules/tasks/tasks.module'
 import { RolesModule } from '@modules/roles/roles.module'
+import { RedisCacheModule } from '@modules/redis/redis.module';
 
 import { typeOrmConfig } from '@configs/ormConfig'
 import { envConfig } from '@configs/envConfig'
@@ -34,6 +35,7 @@ import { APP_GUARD } from '@nestjs/core'
     LogsModule,
     TasksModule,
     RolesModule,
+    // RedisCacheModule
   ],
   controllers: [],
   providers: [],

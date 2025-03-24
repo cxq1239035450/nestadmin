@@ -22,7 +22,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       code: status,
       // path: request.url,
       // method: request.method,
-      message: exception.message || exception.name,
+      msg: exception.message || exception.name,
     })
   }
 }

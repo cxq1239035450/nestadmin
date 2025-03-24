@@ -17,6 +17,10 @@ export const schema = Joi.object({
   SECRET_KEY: Joi.string(),
   // LOG_ON: Joi.boolean(),
   // LOG_LEVEL: Joi.string(),
+  REDIS_HOST: Joi.string(),
+  REDIS_PORT: Joi.number(),
+  REDIS_PASSWORD: Joi.string(),
+  REDIS_DB: Joi.number()
 })
 export const envConfig = {
   isGlobal: true, //设置成全局

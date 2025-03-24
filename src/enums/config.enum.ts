@@ -12,7 +12,7 @@ export enum ConfigEnum {
   REDIS_HOST = 'REDIS_HOST',
   REDIS_PORT = 'REDIS_PORT',
   REDIS_PASSWORD = 'REDIS_PASSWORD',
-  REDIS_RECONNECT = 'REDIS_RECONNECT',
+  REDIS_DB = 'REDIS_DB',
 }
 
 export enum LogEnum {

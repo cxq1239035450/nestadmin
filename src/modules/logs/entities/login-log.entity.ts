@@ -13,7 +13,6 @@ export class LoginLog {
   @Column({ comment:'IP地址', length: 45 })
   ipAddress: string;
 
-  // 登录的用户代理信息
   @Column({ comment:'代理信息',nullable: true, length: 255 })
   userAgent: string;
 
@@ -21,8 +20,7 @@ export class LoginLog {
   @Column({ comment:'登录结果',length: 20 })
   loginResult: string;
 
-  // 响应信息
-  @Column({ nullable: true, length: 255 })
+  @Column({ comment:'响应信息',nullable: true, length: 255 })
   msg: string;
 
   // 自动记录登录时间

@@ -26,11 +26,11 @@ export class AllExceptionFilter implements ExceptionFilter {
       exception['response']?.message || 'Internal Server Error'
 
     const responseBody = {
-      status: httpStatus,
+      code: httpStatus,
       // IP信息
       // ip: requestIp.getClientIp(request),
       // exceptioin: exception['name'],
-      error: msg,
+      msg: msg,
     }
     this.httpAdapter.reply(response, responseBody, httpStatus)
   }

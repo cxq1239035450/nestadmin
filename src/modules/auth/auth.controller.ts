@@ -16,7 +16,7 @@ import { AuthService } from './auth.service'
 import { LoginAuthDto } from './dto/login-auth.dto'
 import { UpdateAuthDto } from './dto/update-auth.dto'
 import { UserService } from '../user/user.service'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiTags,ApiOperation } from '@nestjs/swagger'
 
 @ApiTags('权限')
 @Controller('auth')
@@ -27,15 +27,20 @@ export class AuthController {
     private readonly jwtService: JwtService,
   ) {}
 
+  @ApiOperation({
+    summary: '登录',
+  })
+  @UseGuards(AuthGuard('jwt'))
   @Post('login')
   async login(@Body() dto: LoginAuthDto) {
     return this.authService.login(dto)
   }
 
+  @ApiOperation({
+    summary: '退出',
+  })
   @UseGuards(AuthGuard('jwt'))
-  @Post('sign')
-  async sign(@Body() dto) {
-    this.jwtService.signAsync(dto)
-    return {}
+  @Post('logout')
+  async logout(@Body() dto: LoginAuthDto) {
   }
 }
