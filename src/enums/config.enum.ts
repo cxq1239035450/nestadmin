@@ -20,3 +20,8 @@ export enum LogEnum {
   LOG_ON = 'LOG_ON',
   TIMESTAMP = 'TIMESTAMP',
 }
+
+export enum UploadEnum {
+  UPLOAD_PATH = 'UPLOAD_PATH',
+  MAX_FILE_SIZE = 'MAX_FILE_SIZE',
+}

@@ -1,11 +1,13 @@
 import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import {NestExpressApplication} from '@nestjs/platform-express'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+
 import { AppModule } from './app.module'
 import { AllExceptionFilter } from '@filters/all-exception.filter'
 import { TransformInterceptor } from '@interceptors/transform.interceptor'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true })
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true })
   const { httpAdapter } = app.get(HttpAdapterHost)
   app.useGlobalFilters(new AllExceptionFilter(httpAdapter))
   app.useGlobalPipes(
