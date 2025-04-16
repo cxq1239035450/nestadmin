@@ -1,4 +1,4 @@
-import { IsCronTime } from '@decorators/isCronTime.decorator'
+import { IsCronTime } from 'src/common/decorators/isCronTime.decorator'
 import { IsDate, IsString } from 'class-validator'
 import {
   Column,

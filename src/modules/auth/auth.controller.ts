@@ -30,7 +30,6 @@ export class AuthController {
   @ApiOperation({
     summary: '登录',
   })
-  @UseGuards(AuthGuard('jwt'))
   @Post('login')
   async login(@Body() dto: LoginAuthDto) {
     return this.authService.login(dto)

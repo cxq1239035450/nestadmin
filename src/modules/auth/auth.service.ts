@@ -3,12 +3,14 @@ import { JwtService } from '@nestjs/jwt'
 
 import * as argon2 from 'argon2'
 import { UserService } from '@modules/user/user.service'
+import { RedisService } from '@shared/redis/redis.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UserService,
     private readonly jwtService: JwtService,
+    private readonly redisService: RedisService,
   ) {}
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.find({ username })
@@ -29,9 +31,10 @@ export class AuthService {
     }
 
     const payload = { username: user.username, password: user.password }
-
+    const token = this.jwtService.sign(payload)
+    this.redisService.set(`${user.username}`,token)
     return {
-      access_token: this.jwtService.signAsync(payload),
+      access_token: token,
     }
   }
   loginOut() {

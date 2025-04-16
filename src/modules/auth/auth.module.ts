@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
 import { PassportModule } from '@nestjs/passport'
-import { JwtModule } from '@nestjs/jwt'
+import { JwtModule, JwtService } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { AuthService } from './auth.service'
@@ -8,6 +8,8 @@ import { AuthController } from './auth.controller'
 import { UserModule } from '../user/user.module'
 import { ConfigEnum } from '@enums/config.enum'
 import { JwtStrategy } from './jwt.strategy'
+import { JwtGuard } from '@guards/jwt.guard'
+import { RedisCacheModule } from '@shared/redis/redis.module'
 
 @Global()
 @Module({
@@ -22,9 +24,10 @@ import { JwtStrategy } from './jwt.strategy'
         signOptions: { expiresIn: '8h' },
       }),
     }),
+    RedisCacheModule,
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy,JwtGuard],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService,JwtModule,JwtGuard],
 })
 export class AuthModule {}

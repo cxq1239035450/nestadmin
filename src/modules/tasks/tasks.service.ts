@@ -8,9 +8,9 @@ import { Tasks } from './entities/tasks.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { HttpService } from '@nestjs/axios'
 import { catchError, firstValueFrom, map, of } from 'rxjs'
-import { Serialize } from '@decorators/serialize.decorator'
+import { Serialize } from 'src/common/decorators/serialize.decorator'
 import { getTime } from '@utils/time'
-import { idDto } from '@dto/id.dto'
+import { idDto } from 'src/common/dtos/id.dto'
 
 @Injectable()
 export class TasksService {

@@ -10,9 +10,9 @@ import {
 import { TasksService } from './tasks.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
-import { idDto } from '@dto/id.dto'
+import { idDto } from 'src/common/dtos/id.dto'
 import { AuthGuard } from '@nestjs/passport'
-import { RoleGuard } from '@guards/role.guard'
+import { RoleGuard } from 'src/common/guards/role.guard'
 import { ApiTags,ApiOperation } from '@nestjs/swagger'
 
 @ApiTags('定时任务')

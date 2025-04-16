@@ -15,8 +15,8 @@ import { typeOrmConfig } from '@configs/ormConfig'
 import { envConfig } from '@configs/envConfig'
 import { ServeStaticConfig } from '@configs/serveStaticConfig'
 
-import { RoleGuard } from '@guards/role.guard'
-import { LoggerMiddleware } from '@middlewares/logger.middleware'
+import { RoleGuard } from 'src/common/guards/role.guard'
+import { LoggerMiddleware } from 'src/common/middlewares/logger.middleware'
 import { APP_GUARD } from '@nestjs/core'
 
 @Module({
@@ -34,7 +34,6 @@ import { APP_GUARD } from '@nestjs/core'
     LogsModule,
     TasksModule,
     RolesModule,
-    // RedisCacheModule
   ],
   controllers: [],
   providers: [],

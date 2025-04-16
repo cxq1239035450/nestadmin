@@ -30,6 +30,8 @@ export class JwtGuard extends AuthGuard('jwt') {
     );
     const username = payload['username'];
     const tokenCache = username ? await this.redis.get(username) : null;
+    console.log(tokenCache,'9--------------------');
+    
     if (!payload || !username || tokenCache !== token) {
       throw new UnauthorizedException();
     }

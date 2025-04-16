@@ -4,7 +4,8 @@ import { InjectRedis } from '@nestjs-modules/ioredis';
 import { Redis } from 'ioredis'
 @Injectable()
 export class RedisService {
-  constructor(@InjectRedis() private readonly redis: Redis) {}
+  constructor(@InjectRedis() private readonly redis: Redis) {
+  }
   
   // 设置键值
   async set(key: string, value: string): Promise<boolean> {

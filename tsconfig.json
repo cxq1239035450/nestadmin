@@ -10,18 +10,19 @@
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
-      "@dto/*": ["src/dto/*"],
       "@configs/*": ["src/configs/*"],
-      "@decorators/*": ["src/decorators/*"],
       "@enums/*": ["src/enums/*"],
-      "@filters/*": ["src/filters/*"],
-      "@guards/*": ["src/guards/*"],
-      "@interceptors/*": ["src/interceptors/*"],
-      "@middlewares/*": ["src/middlewares/*"],
       "@modules/*": ["src/modules/*"],
-      "@type/*": ["src/type/*"],
+      "@type/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@common/*": ["src/common/*"]
+      "@shared/*": ["src/shared/*"],
+      "@decorators/*": ["src/common/decorators/*"],
+      "@dto/*": ["src/common/dtos/*"],
+      "@filters/*": ["src/common/filters/*"],
+      "@guards/*": ["src/common/guards/*"],
+      "@interceptors/*": ["src/common/interceptors/*"],
+      "@middlewares/*": ["src/common/middlewares/*"],
+
     }
   }
 }
