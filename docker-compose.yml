@@ -2,16 +2,51 @@
 version: '3.1'
 
 services:
+  # MySQL 数据库服务配置
   db:
-    image: mysql
-    restart: always
+    image: mysql    # 使用官方 MySQL 镜像
+    restart: always # 容器异常退出时总是重启
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example # 设置 MySQL root 用户密码
+      MYSQL_DATABASE: nestsql  # 设置 MySQL 数据库名称
     ports:
-      - 3390:3306
-    # (this is just an example, not intended to be a production configuration)
-  adminer:
-    image: adminer
+      - 3390:3306  # 将容器的3306端口映射到主机的3390端口
+    networks:
+      - nestadmin-network  
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+   # Redis 服务配置
+  redis:
+    image: redis
     restart: always
     ports:
-      - 8080:8080
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - nestadmin-network
+    command: redis-server --appendonly yes 
+
+  # NestJS 应用服务配置
+  nestserve:
+    image: nestserve  # 使用本地构建的 nestadmin 镜像
+    restart: always    # 容器异常退出时总是重启
+    ports:
+      - 10890:3000     # 将容器的3000端口映射到主机的10890端口
+    env_file:
+      - .env.production
+    depends_on:       # 添加依赖关系
+      db:
+        condition: service_healthy
+    networks:
+      - nestadmin-network   # 将容器加入到 nestadmin-network 网络中
+
+networks:
+  nestadmin-network:
+    driver: bridge
+volumes:                        # 定义数据卷
+  mysql_data:
+  redis_data: 

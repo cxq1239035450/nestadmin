@@ -14,6 +14,7 @@ export function buildConnectionOptions() {
       ? [join(__dirname, '../modules/**/entities/*.entity.ts')]
       : [join(__dirname, '../modules/**/entities/*.entity{.js,.ts}')]
 
+
   return {
     type: config[ConfigEnum.DB_TYPE],
     host: config[ConfigEnum.DB_HOST],
@@ -23,14 +24,14 @@ export function buildConnectionOptions() {
     database: config[ConfigEnum.DB_DATABASE],
     entities: entitiesDir,
     // 同步本地的schema与数据库 -> 初始化的时候去使用
-    synchronize: false,
+    synchronize: true,
     // logging: logFlag && process.env.NODE_ENV === 'development',
     // logging: false,
   } as TypeOrmModuleOptions
 }
 
 export const typeOrmConfig = buildConnectionOptions()
-
+console.log(typeOrmConfig,'--------------------------');
 export default new DataSource({
   ...typeOrmConfig,
   migrations: ['src/migrations/**'],

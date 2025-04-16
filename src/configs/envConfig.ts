@@ -8,6 +8,7 @@ export const schema = Joi.object({
     Joi.string().ip(),
     Joi.string().domain(),
     'localhost',
+    'db'
   ),
   DB_TYPE: Joi.string().valid('mysql', 'postgres'),
   DB_DATABASE: Joi.string().required(),
