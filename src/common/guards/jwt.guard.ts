@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config';
-import { ConfigEnum } from '@enums/config.enum';
+import { JwtEnum } from '@enums/config.enum';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import { Redis } from 'ioredis'
 
@@ -26,11 +26,10 @@ export class JwtGuard extends AuthGuard('jwt') {
     }
     const payload = await this.jwtService.verify(
       token,
-      this.configService.get(ConfigEnum.SECRET),
+      this.configService.get(JwtEnum.SECRET),
     );
     const username = payload['username'];
     const tokenCache = username ? await this.redis.get(username) : null;
-    console.log(tokenCache,'9--------------------');
     
     if (!payload || !username || tokenCache !== token) {
       throw new UnauthorizedException();

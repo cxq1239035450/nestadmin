@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { UserModule } from '../user/user.module'
-import { ConfigEnum } from '@enums/config.enum'
+import { JwtEnum } from '@enums/config.enum'
 import { JwtStrategy } from './jwt.strategy'
 import { JwtGuard } from '@guards/jwt.guard'
 import { RedisCacheModule } from '@shared/redis/redis.module'
@@ -20,7 +20,7 @@ import { RedisCacheModule } from '@shared/redis/redis.module'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>(ConfigEnum.SECRET),
+        secret: configService.get<string>(JwtEnum.SECRET),
         signOptions: { expiresIn: '8h' },
       }),
     }),

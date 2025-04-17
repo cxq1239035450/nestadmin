@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { DataSource, DataSourceOptions } from 'typeorm'
-import { ConfigEnum } from '@enums/config.enum'
+import { DbEnum } from '@enums/config.enum'
 import { getServerConfig } from '@utils/index'
 import { join } from 'path'
 
@@ -16,12 +16,12 @@ export function buildConnectionOptions() {
 
 
   return {
-    type: config[ConfigEnum.DB_TYPE],
-    host: config[ConfigEnum.DB_HOST],
-    port: config[ConfigEnum.DB_PORT],
-    username: config[ConfigEnum.DB_USERNAME],
-    password: config[ConfigEnum.DB_PASSWORD],
-    database: config[ConfigEnum.DB_DATABASE],
+    type: config[DbEnum.DB_TYPE],
+    host: config[DbEnum.DB_HOST],
+    port: config[DbEnum.DB_PORT],
+    username: config[DbEnum.DB_USERNAME],
+    password: config[DbEnum.DB_PASSWORD],
+    database: config[DbEnum.DB_DATABASE],
     entities: entitiesDir,
     // 同步本地的schema与数据库 -> 初始化的时候去使用
     synchronize: true,
@@ -31,7 +31,6 @@ export function buildConnectionOptions() {
 }
 
 export const typeOrmConfig = buildConnectionOptions()
-console.log(typeOrmConfig,'--------------------------');
 export default new DataSource({
   ...typeOrmConfig,
   migrations: ['src/migrations/**'],

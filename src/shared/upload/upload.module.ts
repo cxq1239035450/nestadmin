@@ -6,11 +6,13 @@ import { diskStorage } from 'multer';
 import { ConfigService,ConfigModule } from '@nestjs/config';
 import { UploadEnum } from "@enums/config.enum";
 import { join,extname } from "path"
+import { getTime } from '@utils/time'
 
 @Module({
   imports: [
     MulterModule.registerAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         storage: diskStorage({
           destination: (req, file, cb) => {
@@ -22,14 +24,13 @@ import { join,extname } from "path"
             cb(null, fullPath);
           },
           filename: (req, file, cb) => {
-            cb(null, `${new Date().getTime()}-${file.originalname}`);
+            cb(null, `${getTime()}-${file.originalname}`);
           },
         }),
         limits: {
           fileSize: configService.get(UploadEnum.MAX_FILE_SIZE) || 5 * 1024 * 1024, // 默认5MB
         },
       }),
-      inject: [ConfigService],
     }),
   ],
   providers: [CommonUploadService],

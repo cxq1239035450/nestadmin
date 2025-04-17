@@ -8,9 +8,9 @@ export class RedisService {
   }
   
   // 设置键值
-  async set(key: string, value: string): Promise<boolean> {
+  async set(key: string, value: string, seconds?: number): Promise<boolean> {
     try {
-      await this.redis.set(key, value);
+      await this.redis.set(key, value, "EX", seconds || 60*60*8);
       return true;
     } catch (error) {
       console.error('Redis 设置键值对失败:', error);
