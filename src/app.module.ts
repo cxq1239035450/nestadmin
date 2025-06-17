@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ScheduleModule } from '@nestjs/schedule'
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ThrottlerModule } from '@nestjs/throttler'; // 接口限流
 // import { EventEmitterModule } from '@nestjs/event-emitter'; // 发布订阅管理
 
 import { UserModule } from '@modules/user/user.module'
@@ -29,6 +30,15 @@ import { APP_GUARD } from '@nestjs/core'
     TypeOrmModule.forRoot(typeOrmConfig),
     // 静态资源托管
     ServeStaticModule.forRoot(...ServeStaticConfig),
+    // 接口限流
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     UserModule,
     AuthModule,
     LogsModule,

@@ -8,9 +8,9 @@ import { Tasks } from './entities/tasks.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { HttpService } from '@nestjs/axios'
 import { catchError, firstValueFrom, map, of } from 'rxjs'
-import { Serialize } from 'src/common/decorators/serialize.decorator'
 import { getTime } from '@utils/time'
 import { idDto } from 'src/common/dtos/id.dto'
+import { PaginnationDto } from '@dto/pagination.dto'
 
 @Injectable()
 export class TasksService {
@@ -36,8 +36,9 @@ export class TasksService {
   async create(createTaskDto: CreateTaskDto) {
     const task = this.tasksRepository.create(createTaskDto)
     this.createJob(task)
-    return this.tasksRepository.save(task)
+     this.tasksRepository.save(task)
   }
+
   createJob(createTaskDto: Tasks) {
     const job = new CronJob(createTaskDto.executionTime, async () => {
       await this.executeJob(createTaskDto)
@@ -46,6 +47,7 @@ export class TasksService {
     job.start()
     return job
   }
+
   async executeJob(createTaskDto: CreateTaskDto & idDto) {
     const res = await this.sendMessage(createTaskDto)
     return this.update(createTaskDto.id, {
@@ -53,6 +55,7 @@ export class TasksService {
       preExecutionTime: getTime(),
     })
   }
+  
   async update(id: number, updateTaskDto: UpdateTaskDto) {
     return this.tasksRepository.update(id, updateTaskDto)
   }
@@ -61,10 +64,10 @@ export class TasksService {
     return this.tasksRepository.delete(id)
   }
 
-  async findAll(limit?: number, offset?: number) {
+  async findAll({ limit, offset}: PaginnationDto) {
     const [tasksList, total] = await this.tasksRepository.findAndCount({
       // where: {},
-      take: limit || 100,
+      take: limit || 10,
       skip: offset || 0,
     })
     return {

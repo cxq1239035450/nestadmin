@@ -30,9 +30,8 @@ export class JwtGuard extends AuthGuard('jwt') {
     );
     const username = payload['username'];
     const tokenCache = username ? await this.redis.get(username) : null;
-    
     if (!payload || !username || tokenCache !== token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('登录已过期，请重新登录');
     }
 
     const parentCanActivate = (await super.canActivate(context)) as boolean; // this is necessary due to possibly returning `boolean | Promise<boolean> | Observable<boolean>

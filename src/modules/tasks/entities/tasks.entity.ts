@@ -12,7 +12,7 @@ export class Tasks {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({comment: '0: 未执行，1: 执行中'})
+  @Column({comment: '任务名称'})
   name: string
 
   @Column({ comment:'描述', default: '' })
@@ -37,14 +37,14 @@ export class Tasks {
   @Column({comment: '执行时间'})
   executionTime: string
 
-  @Column({comment: '上次执行时间'})
+  @Column({comment: '上次执行时间', default: ''})
   preExecutionTime: string
 
   @CreateDateColumn({
     type: 'timestamp',
     precision: 0,
     default: () => 'CURRENT_TIMESTAMP',
+    comment: '创建时间'
   })
-  @Column({comment: '创建时间'})
   createTime: Date
 }

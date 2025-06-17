@@ -65,7 +65,7 @@ export class UserController {
   })
   @UseGuards(AuthGuard('jwt'))
   @Post('info')
-  getInfo(@Body() createUserDto: CreateUserDto) {}
+  getInfo(@Body() createUserDto) {}
 
   @ApiOperation({
     summary: '修改用户',

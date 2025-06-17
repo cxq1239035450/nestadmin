@@ -2,7 +2,6 @@ import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import {NestExpressApplication} from '@nestjs/platform-express'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import rateLimit from 'express-rate-limit';
 import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module'
@@ -17,20 +16,18 @@ async function bootstrap() {
     new ValidationPipe({
       // 去除在类上不存在的字段
       whitelist: true,
+      // 自动转换参数类型
+      transform: true,
+      // 遇到错误立即停止验证
+      stopAtFirstError: true,
     }),
   )
-  const config = app.get(ConfigService);
   app.useGlobalInterceptors(new TransformInterceptor())
+
+  const config = app.get(ConfigService);
   // // helmet头部安全
   // app.use(helmet())
 
-  // rateLimit限流
-  app.use(
-    rateLimit({
-      windowMs: 1 * 60 * 1000, // 1分钟
-      max: 300, // 限制15分钟内最多只能访问1000次
-    }),
-  )
   const swaggerOptions = new DocumentBuilder()
     .setTitle('NEST后台')
     .setDescription(
@@ -50,6 +47,6 @@ async function bootstrap() {
     module.hot.accept()
     module.hot.dispose(() => app.close())
   }
-  console.log(`Nest 服务启动成功`, '\n', '服务地址', `http://localhost:${port}/`, '\n', 'swagger 文档地址', `http://localhost:${port}/swagger-ui/`);
+  console.log(`Nest 服务启动成功`, '\n', '服务地址', `http://localhost:${port}/`, '\n', 'swagger 文档地址', `http://localhost:${port}/api/`);
 }
 bootstrap()

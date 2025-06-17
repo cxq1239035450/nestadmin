@@ -25,7 +25,11 @@ export class User {
   @ManyToMany(() => Roles, role => role.users, {
     cascade: true,
   })
-  @JoinTable({ name: 'user_roles' })
+  @JoinTable({ 
+    name: 'user_roles',
+    // joinColumn: { name: 'role_id', referencedColumnName: 'id' },
+    // inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' }
+   })
   roles: Roles[]
 
   @OneToMany(() => Logs, logs => logs.user)

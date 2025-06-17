@@ -6,10 +6,15 @@ import {
   BadRequestException,
   UseGuards,
   Patch,
+  Delete,
+  Param,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common'
 import { TasksService } from './tasks.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
+import { PaginnationDto } from '@dto/pagination.dto'
 import { idDto } from 'src/common/dtos/id.dto'
 import { AuthGuard } from '@nestjs/passport'
 import { RoleGuard } from 'src/common/guards/role.guard'
@@ -25,8 +30,8 @@ export class TasksController {
     summary: '获取任务列表',
   })
   @Get('list')
-  getList() {
-    return this.tasksService.findAll()
+  getList(@Query() PaginnationDto: PaginnationDto) {
+    return this.tasksService.findAll(PaginnationDto)
   }
 
   @ApiOperation({
@@ -35,7 +40,7 @@ export class TasksController {
   @Post('create')
   create(@Body() createTaskDto: CreateTaskDto) {
     if (createTaskDto.executionTime.split(' ').length !== 6) {
-      return new BadRequestException('executionTime格式错误')
+      throw new BadRequestException('executionTime格式错误')
     }
     return this.tasksService.create(createTaskDto)
   }
@@ -43,9 +48,9 @@ export class TasksController {
   @ApiOperation({
     summary: '删除任务',
   })
-  @Post('remove')
-  remove(@Body() dto: idDto) {
-    return this.tasksService.remove(dto.id)
+  @Delete(':id')
+  remove(@Param('id', new ParseIntPipe()) id: number) {
+    return this.tasksService.remove(id)
   }
 
   @ApiOperation({
