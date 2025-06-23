@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 
 import * as argon2 from 'argon2'
 import { UserService } from '@modules/user/user.service'
-import { RedisService } from '@shared/redis/redis.service'
+import { RedisService } from '@cmodules/redis/redis.service'
 import { LoginAuthDto } from './dto/login-auth.dto'
 import { User } from '@modules/user/entities/user.entity'
 

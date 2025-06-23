@@ -10,7 +10,7 @@ import { HttpService } from '@nestjs/axios'
 import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { getTime } from '@utils/time'
 import { idDto } from 'src/common/dtos/id.dto'
-import { PaginnationDto } from '@dto/pagination.dto'
+import { PaginnationDto } from '@dtos/pagination.dto'
 
 @Injectable()
 export class TasksService {

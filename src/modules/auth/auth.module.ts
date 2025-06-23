@@ -9,7 +9,7 @@ import { UserModule } from '../user/user.module'
 import { JwtEnum } from '@enums/config.enum'
 import { JwtStrategy } from './jwt.strategy'
 import { JwtGuard } from '@guards/jwt.guard'
-import { RedisCacheModule } from '@shared/redis/redis.module'
+import { RedisCacheModule } from '@cmodules/redis/redis.module'
 
 @Global()
 @Module({

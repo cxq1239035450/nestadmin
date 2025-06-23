@@ -4,6 +4,7 @@ import { RedisModule } from '@nestjs-modules/ioredis'
 import { RedisService } from './redis.service'
 import { ConfigService,ConfigModule } from '@nestjs/config';
 import { RedisEnum } from '@enums/config.enum'
+
 @Module({
   imports: [
     RedisModule.forRootAsync({

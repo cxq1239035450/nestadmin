@@ -15,14 +15,13 @@
       "@modules/*": ["src/modules/*"],
       "@type/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@shared/*": ["src/shared/*"],
+      "@cmodules/*": ["src/common/modules/*"],
       "@decorators/*": ["src/common/decorators/*"],
-      "@dto/*": ["src/common/dtos/*"],
+      "@dtos/*": ["src/common/dtos/*"],
       "@filters/*": ["src/common/filters/*"],
       "@guards/*": ["src/common/guards/*"],
       "@interceptors/*": ["src/common/interceptors/*"],
       "@middlewares/*": ["src/common/middlewares/*"],
-
     }
   }
 }

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtEnum } from '@enums/config.enum'
-import { RedisService } from '@shared/redis/redis.service'
+import { RedisService } from '@cmodules/redis/redis.service'
 
 interface JwtPayload {
   username: string;

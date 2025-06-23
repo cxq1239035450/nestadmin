@@ -65,7 +65,9 @@ export class UserController {
   })
   @UseGuards(AuthGuard('jwt'))
   @Post('info')
-  getInfo(@Body() createUserDto) {}
+  getInfo(@Body() createUserDto) {
+    return this.userService.find(createUserDto)
+  }
 
   @ApiOperation({
     summary: '修改用户',
