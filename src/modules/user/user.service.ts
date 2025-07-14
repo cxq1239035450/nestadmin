@@ -7,6 +7,7 @@ import { In, Repository } from 'typeorm'
 import * as argon2 from 'argon2'
 import { SelectUserDto } from './dto/select-user.dto'
 import { Roles } from '@modules/roles/entities/roles.entity'
+import { idDto } from '@dtos/id.dto'
 
 @Injectable()
 export class UserService {
@@ -32,7 +33,7 @@ export class UserService {
     return this.userRepository.find()
   }
 
-  find(selectUserDto: SelectUserDto): Promise<User[]> {
+  find(selectUserDto: SelectUserDto|idDto): Promise<User[]> {
     return this.userRepository.find({
       where: { ...selectUserDto },
       relations: ['roles'],

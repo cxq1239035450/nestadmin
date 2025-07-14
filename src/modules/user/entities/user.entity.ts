@@ -22,6 +22,9 @@ export class User {
   @Column({ comment: "用户密码" })
   password: string
 
+  // @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP',comment: "上次登录时间" })
+  // lastLoginTime: Date
+
   @ManyToMany(() => Roles, role => role.users, {
     cascade: true,
   })

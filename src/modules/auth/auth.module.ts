@@ -26,7 +26,7 @@ import { RedisCacheModule } from '@cmodules/redis/redis.module'
     }),
     RedisCacheModule,
   ],
-  providers: [AuthService, JwtStrategy,JwtGuard],
+  providers: [AuthService, JwtStrategy, JwtGuard],
   controllers: [AuthController],
   exports: [AuthService,JwtModule,JwtGuard],
 })

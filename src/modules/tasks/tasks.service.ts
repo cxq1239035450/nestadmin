@@ -11,7 +11,8 @@ import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { getTime } from '@utils/time'
 import { idDto } from 'src/common/dtos/id.dto'
 import { PaginnationDto } from '@dtos/pagination.dto'
-
+import { ExportTable } from '@utils/export';
+import { Response } from 'express'
 @Injectable()
 export class TasksService {
   constructor(
@@ -22,6 +23,7 @@ export class TasksService {
   ) {
     this.init()
   }
+
   async init() {
     const allList = await this.tasksRepository.find({
       where: {
@@ -35,8 +37,10 @@ export class TasksService {
 
   async create(createTaskDto: CreateTaskDto) {
     const task = this.tasksRepository.create(createTaskDto)
-    this.createJob(task)
-     this.tasksRepository.save(task)
+    this.tasksRepository.save(task)
+    if(createTaskDto.status === 1) {
+      this.createJob(task)
+    }
   }
 
   createJob(createTaskDto: Tasks) {
@@ -46,6 +50,36 @@ export class TasksService {
     this.schedulerRegistry.addCronJob(createTaskDto.name, job)
     job.start()
     return job
+  }
+  getCronJob(name: string) {
+    try {
+      return this.schedulerRegistry.getCronJob(name);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async changeStatus(id: number, status: number,uesrName: string) {
+    const task = await this.findOne(id);
+    if (!task) {
+      throw new Error('任务不存在');
+    }
+
+    const cronJob = this.getCronJob(task.name);
+
+    if (status === 1) {
+      // 启用
+      if (!cronJob) {
+      } else {
+        cronJob.start();
+      }
+    } else {
+      // 停用
+      if (cronJob) {
+        cronJob.stop();
+      }
+    }
+    await this.update(id, { status })
   }
 
   async executeJob(createTaskDto: CreateTaskDto & idDto) {
@@ -106,5 +140,31 @@ export class TasksService {
           }),
         ),
     )
+  }
+
+  async export(res: Response, body: any) {
+    const data = await this.findAll(body);
+    const options = {
+      sheetName: '定时任务',
+      data: data.list,
+      header: [
+        { title: '任务编号', dataIndex: 'jobId' },
+        { title: '任务名称', dataIndex: 'jobName' },
+        { title: '任务组名', dataIndex: 'jobGroup' },
+        { title: '调用目标字符串', dataIndex: 'invokeTarget' },
+        { title: 'cron执行表达式', dataIndex: 'cronExpression' },
+      ],
+      dictMap: {
+        status: {
+          '0': '成功',
+          '1': '失败',
+        },
+        jobGroup: {
+          SYSTEM: '系统',
+          DEFAULT: '默认',
+        },
+      },
+    };
+    ExportTable(options, res);
   }
 }

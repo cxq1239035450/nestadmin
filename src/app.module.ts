@@ -16,7 +16,7 @@ import { typeOrmConfig } from '@configs/ormConfig'
 import { envConfig } from '@configs/envConfig'
 import { ServeStaticConfig } from '@configs/serveStaticConfig'
 
-import { RoleGuard } from 'src/common/guards/role.guard'
+import { JwtGuard } from '@guards/jwt.guard'
 import { LoggerMiddleware } from 'src/common/middlewares/logger.middleware'
 import { APP_GUARD } from '@nestjs/core'
 
@@ -46,7 +46,12 @@ import { APP_GUARD } from '@nestjs/core'
     RolesModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard, // 校验jwt
+    }
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

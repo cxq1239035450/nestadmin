@@ -1,8 +1,15 @@
-import { IsString, IsNotEmpty, IsNumberString } from 'class-validator'
+import { IsString, IsNotEmpty, IsNumberString, IsOptional } from 'class-validator'
 
 export class SelectUserDto {
-  // @IsString()
-  // username?: string
-  // @IsNumberString()
-  // id?: number
+  @IsOptional()
+  @IsString()
+  username?: string
+
+  @IsOptional()
+  @IsNumberString()
+  page?: number
+  
+  @IsOptional()
+  @IsNumberString()
+  limit?: number
 }
